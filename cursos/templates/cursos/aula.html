@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">{{ aula.titulo }}</h1>
+    <div class="player">
+        <video id="videoPlayer" controls class="w-100">
+            <source src="{{ aula.conteudo_video.url }}" type="video/mp4">
+        </video>
+        <div class="controls mt-3">
+            <button onclick="togglePlay()" class="btn btn-primary">▶️ Play/Pause</button>
+            <input type="range" id="progressBar" min="0" max="100" value="0" class="w-100">
+        </div>
+    </div>
+    <div class="conteudo mt-4">
+        <p>{{ aula.conteudo_texto }}</p>
+    </div>
+    <a href="{% url 'quiz' aula.id %}" class="btn btn-warning">Fazer Quiz</a>
+</div>
+{% endblock %}

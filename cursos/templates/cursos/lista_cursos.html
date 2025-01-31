@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Cursos Disponíveis</h1>
+    <div class="row">
+        {% for curso in cursos %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ curso.capa.url }}" class="card-img-top" alt="{{ curso.titulo }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ curso.titulo }}</h5>
+                    <p class="card-text">{{ curso.descricao }}</p>
+                    <p class="card-text"><strong>Preço: {{ curso.preco }} MZN</strong></p>
+                    <a href="{% url 'detalhes_curso' curso.id %}" class="btn btn-primary">Ver Curso</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

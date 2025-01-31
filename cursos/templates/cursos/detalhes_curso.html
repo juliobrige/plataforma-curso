@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">{{ curso.titulo }}</h1>
+    <p>{{ curso.descricao }}</p>
+    <p>Instrutor: {{ curso.instrutor.username }}</p>
+
+    <h2>Módulos</h2>
+    {% for modulo in modulos %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3>{{ modulo.titulo }}</h3>
+            <ul class="list-group">
+                {% for aula in modulo.aula_set.all %}
+                <li class="list-group-item">
+                    <a href="{% url 'aula' aula.id %}">{{ aula.titulo }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+
+    <a href="{% url 'matricular' curso.id %}" class="btn btn-success">Matricular-se</a>
+</div>
+{% endblock %}
