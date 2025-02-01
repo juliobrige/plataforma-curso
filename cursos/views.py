@@ -4,6 +4,9 @@ from .models import Curso, Modulo, Aula
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
 
+def index(request):
+    return render(request, 'cursos/index.html')
+
 def home (request):
           return render(request, 'cursos/home.html')
 

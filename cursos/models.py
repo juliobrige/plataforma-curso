@@ -1,6 +1,4 @@
 from django.db import models
-# cursos/models.py
-from django.db import models
 from usuarios.models import Usuario
 
 class Curso(models.Model):
