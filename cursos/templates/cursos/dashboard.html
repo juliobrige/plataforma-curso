@@ -1,0 +1,31 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4 text-center">Bem-vindo, {{ user.get_full_name|default:user.username }}!</h1>
+    <h2 class="my-4 text-center">Meus Cursos</h2>
+    <div class="row">
+        {% for matricula in matriculas %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ matricula.curso.capa.url }}" class="card-img-top" alt="{{ matricula.curso.titulo }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ matricula.curso.titulo }}</h5>
+                    <p class="card-text">{{ matricula.curso.descricao|truncatewords:20 }}</p>
+                    <p class="card-text"><strong>Instrutor:</strong> {{ matricula.curso.instrutor.get_full_name|default:matricula.curso.instrutor.username }}</p>
+                    <p class="card-text"><strong>Data de Início:</strong> {{ matricula.curso.data_inicio|date:"d M Y" }}</p>
+                    <a href="{% url 'detalhes_curso' matricula.curso.id %}" class="btn btn-primary">Acessar Curso</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">Você ainda não está matriculado em nenhum curso.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
