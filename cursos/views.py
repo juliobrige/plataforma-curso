@@ -5,6 +5,7 @@ from reportlab.pdfgen import canvas
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Matricula
+from .models import Evento
 
 @login_required
 def dashboard(request):
@@ -13,9 +14,23 @@ def dashboard(request):
 
 
 def index(request):
-    cursos = Curso.objects.all()  
-    return render(request, 'cursos/index.html', {'cursos': cursos})
+    # Lista de eventos em andamento e concluídos
+    eventos_andamento = Evento.objects.filter(status='andamento')
+    eventos_concluidos = Evento.objects.filter(status='concluido')
+    
+    context = {
+        'eventos_andamento': eventos_andamento,
+        'eventos_concluidos': eventos_concluidos,
+    }
+    return render(request, 'eventos/index.html', context)
 
+def detalhes_evento(request, evento_id):
+    # Detalhes de um evento específico
+    evento = get_object_or_404(Evento, id=evento_id)
+    context = {
+        'evento': evento,
+    }
+    return render(request, 'eventos/evento.html', context)
 def home (request):
           return render(request, 'cursos/home.html')
 
@@ -29,22 +44,18 @@ def detalhes_curso(request, curso_id):
     return render(request, 'cursos/detalhes_curso.html', {'curso': curso, 'modulos': modulos})
 
 def aula_view(request):
-    # Lógica da view
     return render(request, 'cursos/aula.html')
 
 from django.shortcuts import redirect
 
 def matricular(request, curso_id):
     if not request.user.is_authenticated:
-        return redirect('login')  # Redireciona para a página de login
-    # Lógica para matricular o usuário autenticado no curso
+        return redirect('login')  
 
 def dashboard(request):
-    # Lógica da view
     return render(request, 'cursos/dashboard.html')
 
 def quiz_view(request):
-    # Lógica da view
     return render(request, 'cursos/quiz.html')    
 
 

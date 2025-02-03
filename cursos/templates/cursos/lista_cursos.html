@@ -1,22 +1,203 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4">Cursos Disponíveis</h1>
-    <div class="row">
-        {% for curso in cursos %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="{{ curso.capa.url }}" class="card-img-top" alt="{{ curso.titulo }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ curso.titulo }}</h5>
-                    <p class="card-text">{{ curso.descricao }}</p>
-                    <p class="card-text"><strong>Preço: {{ curso.preco }} MZN</strong></p>
-                    <a href="{% url 'detalhes_curso' curso.id %}" class="btn btn-primary">Ver Curso</a>
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos Disponíveis</title>
+    <!-- Bootstrap CSS (opcional, para estilização rápida) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo personalizado */
+        body {
+            font-family: Arial, sans-serif;
+            background-color:rgb(0, 0, 0);
+        }
+
+        .banner {
+            background: linear-gradient(90deg,rgb(82, 23, 97),rgb(174, 0, 255));
+            color: white;
+            padding: 60px 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .banner .btn-primary {
+            background-color: white;
+            color: #007bff;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .banner .btn-primary:hover {
+            background-color:rgb(197, 207, 218);
+            color: #0056b3;
+        }
+
+        .curso-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(138, 110, 110, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .card-img-top {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+            color: #333;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Banner Informativo -->
+        <div class="banner">
+            <h1>Bem-vindo à Plataforma de Cursos</h1>
+            <p>Aprenda com os melhores instrutores e transforme sua carreira.</p>
+            <a href="#cursos-disponiveis" class="btn btn-primary">Explorar Cursos</a>
+        </div>
+
+        <!-- Detalhes do Curso (Exemplo) -->
+        <div class="detalhes-curso mb-5">
+            <h2>Detalhes do Curso</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="https://via.placeholder.com/600x400" alt="Imagem do Curso" class="img-fluid rounded">
+                </div>
+                <div class="col-md-6">
+                    <h3>Curso de Desenvolvimento Web</h3>
+                    <p><strong>Instrutor:</strong> João Silva</p>
+                    <p><strong>Horário:</strong> Segundas e Quartas, 18h - 20h</p>
+                    <p><strong>Descrição:</strong> Aprenda a criar sites modernos e responsivos com HTML, CSS e JavaScript.</p>
+                    <p><strong>Preço:</strong> 1000 MZN</p>
+                    <a href="#" class="btn btn-primary">Inscreva-se Agora</a>
                 </div>
             </div>
         </div>
-        {% endfor %}
+
+        <!-- Cursos Disponíveis -->
+        <div id="cursos-disponiveis" class="cursos-disponiveis">
+            <h2 class="mb-4">Cursos Disponíveis</h2>
+            <div class="row">
+                <!-- Curso 1 -->
+                <div class="col-md-4 mb-4 curso-card">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Curso 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Desenvolvimento Web</h5>
+                            <p class="card-text">Aprenda a criar sites modernos e responsivos.</p>
+                            <p class="card-text"><strong>Instrutor:</strong> João Silva</p>
+                            <p class="card-text"><strong>Horário:</strong> Segundas e Quartas, 18h - 20h</p>
+                            <p class="card-text"><strong>Preço:</strong> 1000 MZN</p>
+                            <a href="#" class="btn btn-primary">Ver Curso</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curso 2 -->
+                <div class="col-md-4 mb-4 curso-card">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Curso 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Design Gráfico</h5>
+                            <p class="card-text">Domine as ferramentas de design mais populares.</p>
+                            <p class="card-text"><strong>Instrutor:</strong> Maria Santos</p>
+                            <p class="card-text"><strong>Horário:</strong> Terças e Quintas, 19h - 21h</p>
+                            <p class="card-text"><strong>Preço:</strong> 1200 MZN</p>
+                            <a href="#" class="btn btn-primary">Ver Curso</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curso 3 -->
+                <div class="col-md-4 mb-4 curso-card">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Curso 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Marketing Digital</h5>
+                            <p class="card-text">Aprenda estratégias para impulsionar negócios online.</p>
+                            <p class="card-text"><strong>Instrutor:</strong> Pedro Costa</p>
+                            <p class="card-text"><strong>Horário:</strong> Sábados, 10h - 12h</p>
+                            <p class="card-text"><strong>Preço:</strong> 1500 MZN</p>
+                            <a href="#" class="btn btn-primary">Ver Curso</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <!-- JavaScript para Animações -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cursoCards = document.querySelectorAll('.curso-card');
+
+            // Animação ao carregar a página
+            cursoCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
 {% endblock %}

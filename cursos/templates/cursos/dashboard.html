@@ -1,31 +1,93 @@
-
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block content %}
 <div class="container">
-    <h1 class="my-4 text-center">Bem-vindo, {{ user.get_full_name|default:user.username }}!</h1>
-    <h2 class="my-4 text-center">Meus Cursos</h2>
+    <!-- Header -->
+    <h1 class="my-5 text-center text-primary">Bem-vindo, {{ user.get_full_name|default:user.username }}!</h1>
+    
+    <!-- Informações do Usuário (Ícones e Dados) -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">Informações do Perfil</h5>
+                    <div class="d-flex align-items-center">
+                        <img src="https://via.placeholder.com/50" alt="Ícone de Perfil" class="rounded-circle mr-3">
+                        <div>
+                            <p class="text-muted mb-1"><strong>Nome:</strong> {{ user.get_full_name|default:user.username }}</p>
+                            <p class="text-muted mb-1"><strong>Email:</strong> {{ user.email }}</p>
+                            <p class="text-muted mb-1"><strong>Status:</strong> Ativo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico de Progresso de Estudo -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">Progresso de Estudo</h5>
+                    <canvas id="progressChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meus Cursos Pagos -->
+    <h2 class="my-5 text-center text-secondary">Meus Cursos Pagos</h2>
+    
     <div class="row">
         {% for matricula in matriculas %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <img src="{{ matricula.curso.capa.url }}" class="card-img-top" alt="{{ matricula.curso.titulo }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ matricula.curso.titulo }}</h5>
-                    <p class="card-text">{{ matricula.curso.descricao|truncatewords:20 }}</p>
-                    <p class="card-text"><strong>Instrutor:</strong> {{ matricula.curso.instrutor.get_full_name|default:matricula.curso.instrutor.username }}</p>
-                    <p class="card-text"><strong>Data de Início:</strong> {{ matricula.curso.data_inicio|date:"d M Y" }}</p>
-                    <a href="{% url 'detalhes_curso' matricula.curso.id %}" class="btn btn-primary">Acessar Curso</a>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow-lg border-0 rounded-lg overflow-hidden h-100">
+                <img src="{{ matricula.curso.capa.url }}" class="card-img-top" alt="{{ matricula.curso.titulo }}" style="object-fit: cover; height: 200px;">
+                <div class="card-body p-4">
+                    <h5 class="card-title text-dark">{{ matricula.curso.titulo }}</h5>
+                    <p class="card-text text-muted">{{ matricula.curso.descricao|truncatewords:20 }}</p>
+                    <p class="card-text text-muted"><strong>Instrutor:</strong> {{ matricula.curso.instrutor.get_full_name|default:matricula.curso.instrutor.username }}</p>
+                    <p class="card-text text-muted"><strong>Data de Início:</strong> {{ matricula.curso.data_inicio|date:"d M Y" }}</p>
+                    <p class="card-text text-success"><strong>Status:</strong> Pago</p>
+                    <a href="{% url 'detalhes_curso' matricula.curso.id %}" class="btn btn-primary w-100">Acessar Curso</a>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="col-12">
-            <p class="text-center">Você ainda não está matriculado em nenhum curso.</p>
+            <p class="text-center text-muted">Você ainda não está matriculado em nenhum curso pago.</p>
         </div>
         {% endfor %}
     </div>
 </div>
+
+<!-- Scripts necessários para gráficos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Gráfico de Progresso (Exemplo de Gráfico de Barras)
+    const ctx = document.getElementById('progressChart').getContext('2d');
+    const progressChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+            datasets: [{
+                label: 'Horas Estudadas',
+                data: [10, 15, 20, 18, 25, 30],
+                backgroundColor: '#8257E5',
+                borderColor: '#6E57E0',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
 {% endblock %}
+

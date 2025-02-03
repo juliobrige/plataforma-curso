@@ -35,3 +35,15 @@ class Matricula(models.Model):
 
     def __str__(self):
         return f"{self.aluno.username} - {self.curso.titulo}"
+
+
+class Evento(models.Model):
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField()
+    status = models.CharField(max_length=50)
+    data_inicio = models.DateTimeField()
+    data_fim = models.DateTimeField()
+
+    def __str__(self):
+        return self.nome
+      

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color:rgb(10, 10, 20);
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color:rgb(77, 41, 255);
+        }
+        .eventos-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .eventos-lista {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .eventos-lista h2 {
+            color: #6E57E0;
+            margin-bottom: 20px;
+        }
+        .evento {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .evento:last-child {
+            border-bottom: none;
+        }
+        .evento h3 {
+            margin: 0;
+            color: #333;
+        }
+        .evento p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .evento a {
+            color: #6E57E0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .evento a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Eventos</h1>
+
+    <div class="eventos-container">
+        <!-- Eventos em Andamento -->
+        <div class="eventos-lista">
+            <h2>Eventos em Andamento</h2>
+            <div class="evento">
+                <h3>Workshop de Python</h3>
+                <p>Data: 25/10/2023 - 28/10/2023</p>
+                <p>Local: Online</p>
+                <a href="/evento/1">Ver detalhes</a>
+            </div>
+            <div class="evento">
+                <h3>Feira de Tecnologia</h3>
+                <p>Data: 30/10/2023 - 01/11/2023</p>
+                <p>Local: Centro de Convenções</p>
+                <a href="/evento/2">Ver detalhes</a>
+            </div>
+        </div>
+
+        <!-- Eventos Concluídos -->
+        <div class="eventos-lista">
+            <h2>Eventos Concluídos</h2>
+            <div class="evento">
+                <h3>Conferência de IA</h3>
+                <p>Data: 10/10/2023 - 12/10/2023</p>
+                <p>Local: Hotel XYZ</p>
+                <a href="/evento/3">Ver detalhes</a>
+            </div>
+            <div class="evento">
+                <h3>Hackathon Inovação</h3>
+                <p>Data: 05/09/2023 - 07/09/2023</p>
+                <p>Local: Universidade ABC</p>
+                <a href="/evento/4">Ver detalhes</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

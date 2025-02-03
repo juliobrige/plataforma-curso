@@ -1,27 +1,198 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <!-- Fontes do Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Estilos CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<div class="container">
-    <h1 class="my-4">Registro</h1>
+        body {
+            font-family: 'Inter', sans-serif;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+           
+        }
 
-    {% if form.errors %}
-        <div class="alert alert-danger">
-            <strong>Erro!</strong> Verifique os campos do formulário.
+        .container {
+            display: flex;
+            width: 95%;
+            max-width: 1600px;
+            background: #121214;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .left {
+            flex: 1;
+            background: linear-gradient(135deg, #6E57E0, #8E7AFF);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .left::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+        }
+
+        .left img {
+            z-index: 1;
+            width: 150px;
+        }
+
+        .right {
+            flex: 1;
+            padding: 60px;
+            color: #fff;
+        }
+
+        .right h2 {
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #1C1C1F;
+            color: #fff;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #8257E5;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #8257E5;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #6E57E0;
+        }
+
+        .alternative {
+            margin-top: 25px;
+            font-size: 1rem;
+            color: #ccc;
+            text-align: center;
+        }
+
+        .alternative a {
+            color: #8257E5;
+            text-decoration: none;
+        }
+
+        .alternative a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Container principal -->
+    <div class="container">
+        <div class="right">
+            <h2>Crie sua conta</h2>
+    
+            <!-- Exibir mensagens -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+    
+            <!-- Formulário de registro -->
+            <form action="{% url 'registro' %}" method="POST">
+                {% csrf_token %}
+                <!-- Campo de nome -->
+                <div class="form-group">
+                    <label for="username">Nome de usuário</label>
+                    <input type="text" id="username" name="username" placeholder="Seu nome de usuário" value="{{ form.username.value|default_if_none:'' }}" required>
+                </div>
+    
+                <!-- Campo de e-mail -->
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="Seu e-mail" value="{{ form.email.value|default_if_none:'' }}" required>
+                </div>
+    
+                <!-- Campo de senha -->
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password1" name="password1" placeholder="Crie uma senha" required>
+                </div>
+    
+                <!-- Campo de confirmar senha -->
+                <div class="form-group">
+                    <label for="confirm_password">Confirmar senha</label>
+                    <input type="password" id="password2" name="password2" placeholder="Confirme sua senha" required>
+                </div>
+    
+                <!-- Botão de submit -->
+                <button class="btn-primary" type="submit">Registrar</button>
+            </form>
+    
+            <!-- Link para login -->
+            <div class="alternative">
+                <p>Já tem uma conta? <a href="{% url 'login' %}">Acesse aqui</a></p>
+            </div>
         </div>
-    {% endif %}
+    </div>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Registrar</button>
-    </form>
-
-    {% if success %}
-        <div class="alert alert-success mt-3">
-            Cadastro realizado com sucesso!
-        </div>
-    {% endif %}
-</div>
 {% endblock %}
